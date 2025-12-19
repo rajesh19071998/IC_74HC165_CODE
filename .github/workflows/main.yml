@@ -1,0 +1,23 @@
+name: Arduino Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+
+      - name: Install board platform
+        run: arduino-cli core install arduino:avr
+
+      - name: Compile sketch
+        run: arduino-cli compile --fqbn arduino:avr:uno src/my_sketch
